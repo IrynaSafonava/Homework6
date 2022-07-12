@@ -7,13 +7,10 @@ import static java.lang.String.format;
 
 public class HomePage extends BasePage {
 
-    private static final By MAIN_NAVIGATION_LINK_PATTERN = By.xpath(format("//span(@class ='b-main-navigation__text') and text()= %s))"));
+    private static final String MAIN_NAVIGATION_LINK_PATTERN =
+            "//*[@class='b-main-navigation__text' and text()='%s']";
 
-    public HomePage(WebDriver driver) {
-        super(driver);
-    }
-
-    public void clickOnCatalogLink() {
-
+    public void clickOnNavigationLink(String option) {
+        waitForElementToBeVisible(By.xpath(String.format(MAIN_NAVIGATION_LINK_PATTERN, option))).click();
     }
 }

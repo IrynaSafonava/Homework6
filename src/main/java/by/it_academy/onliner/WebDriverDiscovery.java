@@ -1,7 +1,10 @@
 package by.it_academy.onliner;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.time.Duration;
 
 public class WebDriverDiscovery {
     private static ThreadLocal<RemoteWebDriver> remoteWebDriver = new ThreadLocal<>();
@@ -19,10 +22,10 @@ public class WebDriverDiscovery {
     private static void setWebDriver(RemoteWebDriver driver) {
         remoteWebDriver.set(driver);
         driver.manage().window().maximize();
-        driver.manage().timeouts().getPageLoadTimeout();
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
     }
 
-    public static ThreadLocal<RemoteWebDriver> getRemoteWebDriver() {
-        return remoteWebDriver;
+    public WebDriver getWebDriver() {
+        return remoteWebDriver.get();
     }
 }
