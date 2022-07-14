@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public abstract class BasePage {
     private final WebDriver driver;
@@ -21,7 +22,7 @@ public abstract class BasePage {
     }
 
     public WebElement waitForElementToBeVisible(By by) {
-        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
@@ -31,6 +32,10 @@ public abstract class BasePage {
 
     public void closeBrowser(){
         driver.quit();
+    }
+
+    public List<WebElement> getListOfElements(By by) {
+        return (List<WebElement>) driver.findElements(by);
     }
 
 }

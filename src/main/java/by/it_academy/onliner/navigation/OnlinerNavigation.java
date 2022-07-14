@@ -4,8 +4,10 @@ import by.it_academy.onliner.page_object.HomePage;
 
 public class OnlinerNavigation {
 
-   public static void navigateToOnlinerHomePage(){
-       new HomePage().navigate("https://www.onliner.by");
+    private static final String ONLINER_URL = "https://www.onliner.by";
+
+   public static void navigateOnlinerHomePage(){
+       new HomePage().navigate(ONLINER_URL);
    }
 
 }
