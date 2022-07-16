@@ -22,7 +22,7 @@ public abstract class BasePage {
     }
 
     public WebElement waitForElementToBeVisible(By by) {
-        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
@@ -35,7 +35,6 @@ public abstract class BasePage {
     }
 
     public List<WebElement> getListOfElements(By by) {
-        return (List<WebElement>) driver.findElements(by);
+        return driver.findElements(by);
     }
-
 }

@@ -8,9 +8,7 @@ public class HomePage extends BasePage {
     private static final String HEADER_NAVIGATION_LINK_PATTERN =
             "//*[@class='b-main-navigation__text' and text()='%s']";
 
-
-    public CatalogPage clickOnHeaderNavigationLink(String option) {
+    public void clickHeaderNavigationLink(String option) {
         waitForElementToBeVisible(By.xpath(String.format(HEADER_NAVIGATION_LINK_PATTERN, option))).click();
-        return new CatalogPage();
     }
 }
