@@ -11,6 +11,10 @@ public class CatalogPage extends BasePage {
     private static final String CATALOG_CLASSIFIER_XPATH_PATTERN =
             "//*[contains(@class, 'catalog-navigation-classifier') and contains(text(), '%s')]";
 
+    private static final String CATALOG_CLASSIFIER_ACTIVE_XPATH_PATTERN =
+            "//*[contains(@class, 'catalog-navigation-classifier__item catalog-navigation-classifier__item_active')]" +
+                    "//span[contains(text(), '%s')]";
+
     private static final String SIDE_LIST_WITH_CATEGORIES_XPATH_PATTERN =
             "//div[@class='catalog-navigation-list__category' and @style='display: block;']"
                     + "//div[@class = 'catalog-navigation-list__aside-title']";
@@ -61,11 +65,20 @@ public class CatalogPage extends BasePage {
         }
     }
 
+    public boolean isClassifierActive() {
+        try {
+            return waitForElementToBeVisible(By.xpath(CATALOG_CLASSIFIER_ACTIVE_XPATH_PATTERN))
+                    .isDisplayed();
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
     public List<WebElement> getListOfCategoryItems(String category) {
         return getListOfElements(By.xpath(String.format(CATALOG_CATEGORY_ITEM_XPATH_PATTERN, category)));
     }
 
-    public List<WebElement> getListOfItemsTitlesOfCategory(String category) {
+    public List<WebElement> getListOfTitles(String category) {
         return getListOfElements(By.xpath(String.format(CATALOG_CATEGORY_ITEM_TITLE_XPATH_PATTERN, category)));
     }
 

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.WebElement;
 
@@ -39,51 +38,18 @@ public class CatalogPageTest {
     }
 
     @Test
-    public void allCategoryItemsHaveTitleAndFullDescription() {
-        if(!catalogPage.isSideListDisplayed()) {
-            catalogPage
-                    .clickCatalogClassifierLink("Компьютеры и сети")
-                    .clickCategoryLink("Комплектующие");
-        }
-
-        int categoryItemsNumber = catalogPage
-                .getListOfCategoryItems("Комплектующие")
-                .size();
-
-        List<WebElement> listOfItemsWithTitles = catalogPage
-                .getListOfItemsTitlesOfCategory("Комплектующие");
-        System.out.println(listOfItemsWithTitles);
-        List<WebElement> listOfItemsDescriptionsWithProductQnt = catalogPage
-                .getListOfDescriptionsWithContent("товар");
-        List<WebElement> listOfItemsDescriptionsWithPrice = catalogPage
-                .getListOfDescriptionsWithContent("р.");
-
-        assertThat(listOfItemsWithTitles)
-                .as("Category items have no empty titles")
-                .hasSize(categoryItemsNumber)
-                .noneMatch(titles -> titles.getText().isEmpty());
-
-        assertThat(listOfItemsDescriptionsWithPrice)
-                .as("Category items have min price")
-                .hasSize(categoryItemsNumber);
-
-        assertThat(listOfItemsDescriptionsWithProductQnt)
-                .as("Category items have quantity")
-                .hasSize(categoryItemsNumber);
-    }
-
-    @Test
     public void sideListWithCategoriesDisplayed() {
+        boolean isSideListDisplayed = catalogPage
+                .clickCatalogClassifierLink("Компьютеры и сети").isSideListDisplayed();
 
-        if (!catalogPage.isSideListDisplayed()) {
-            catalogPage
-                    .clickCatalogClassifierLink("Компьютеры и сети")
-                    .isSideListDisplayed();
+        if (!isSideListDisplayed) {
+            isSideListDisplayed = catalogPage
+                    .clickCatalogClassifierLink("Компьютеры и сети").isSideListDisplayed();
         }
 
         List<WebElement> listOfCategories = catalogPage.getListOfCategories();
 
-        assertThat(catalogPage.isSideListDisplayed())
+        assertThat(isSideListDisplayed)
                 .as("Side list is displayed")
                 .isTrue();
 
@@ -93,7 +59,45 @@ public class CatalogPageTest {
                 .containsAll(Arrays.asList("Ноутбуки, компьютеры, мониторы", "Комплектующие",
                         "Хранение данных", "Сетевое оборудование"));
     }
+    @Test
+    public void allCategoryItemsHaveTitleAndFullDescription() {
 
+        boolean isSideListDisplayed = catalogPage
+                .clickCatalogClassifierLink("Компьютеры и сети").isSideListDisplayed();
+
+        if (!isSideListDisplayed) {
+            catalogPage
+                    .clickCatalogClassifierLink("Компьютеры и сети")
+                    .clickCategoryLink("Комплектующие");
+        } else {
+            catalogPage.clickCategoryLink("Комплектующие");
+        }
+
+        int categoryItemsNumber = catalogPage
+                .getListOfCategoryItems("Комплектующие")
+                .size();
+
+        List<WebElement> listOfItemsWithTitles = catalogPage
+                .getListOfTitles("Комплектующие");
+        System.out.println(listOfItemsWithTitles);
+        List<WebElement> listOfItemsDescriptionsWithProductQnt = catalogPage
+                .getListOfDescriptionsWithContent("товар");
+        List<WebElement> listOfItemsDescriptionsWithPrice = catalogPage
+                .getListOfDescriptionsWithContent("р.");
+
+        assertThat(listOfItemsWithTitles)
+                .as("Category items have no empty titles")
+                .hasSize(categoryItemsNumber)
+                .noneMatch(title -> title.getText().isEmpty());
+
+        assertThat(listOfItemsDescriptionsWithPrice)
+                .as("Category items have min price")
+                .hasSize(categoryItemsNumber);
+
+        assertThat(listOfItemsDescriptionsWithProductQnt)
+                .as("Category items have quantity")
+                .hasSize(categoryItemsNumber);
+    }
 
     @AfterAll
     public static void close() {
