@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.WebElement;
 
@@ -25,9 +26,9 @@ public class CatalogPageTest {
         new HomePage().clickHeaderNavigationLink("Каталог");
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "#{index} - Run test with option = {0}")
     @ValueSource(strings = {"Электроника", "Компьютеры и сети", "Бытовая техника", "Стройка и ремонт",
-            "Дом и сад", "Авто и мото", "Красота и спорт", "Детям и мамам", "Работа и офис"})
+            "Дом и сад", "Авто и мото", "Красота и спорт", "Детям и мамам", "Работа и офис", "Еда"})
     public void catalogClassifierOptionsDisplayed(String option) {
         boolean isCatalogNavigationOptionDisplayed = catalogPage
                 .isElementDisplayed(option);
@@ -59,26 +60,27 @@ public class CatalogPageTest {
                 .containsAll(Arrays.asList("Ноутбуки, компьютеры, мониторы", "Комплектующие",
                         "Хранение данных", "Сетевое оборудование"));
     }
-    @Test
-    public void allCategoryItemsHaveTitleAndFullDescription() {
+    @ParameterizedTest(name = "#{index} - Run test with classifier = {0} and category = {1}")
+    @CsvSource(value = {"Компьютеры и сети, Комплектующие"})
+    public void allCategoryItemsHaveTitleAndFullDescription(String classifier, String category) {
 
-        boolean isSideListDisplayed = catalogPage
-                .clickCatalogClassifierLink("Компьютеры и сети").isSideListDisplayed();
+        boolean isClassifierActive = catalogPage
+                .isClassifierActive(classifier);
 
-        if (!isSideListDisplayed) {
+        if (!isClassifierActive) {
             catalogPage
-                    .clickCatalogClassifierLink("Компьютеры и сети")
-                    .clickCategoryLink("Комплектующие");
+                    .clickCatalogClassifierLink(classifier)
+                    .clickCategoryLink(category);
         } else {
-            catalogPage.clickCategoryLink("Комплектующие");
+            catalogPage.clickCategoryLink(category);
         }
 
         int categoryItemsNumber = catalogPage
-                .getListOfCategoryItems("Комплектующие")
+                .getListOfCategoryItems(category)
                 .size();
 
         List<WebElement> listOfItemsWithTitles = catalogPage
-                .getListOfTitles("Комплектующие");
+                .getListOfTitles(category);
         System.out.println(listOfItemsWithTitles);
         List<WebElement> listOfItemsDescriptionsWithProductQnt = catalogPage
                 .getListOfDescriptionsWithContent("товар");

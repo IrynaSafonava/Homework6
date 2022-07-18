@@ -65,9 +65,10 @@ public class CatalogPage extends BasePage {
         }
     }
 
-    public boolean isClassifierActive() {
+    public boolean isClassifierActive(String classifier) {
         try {
-            return waitForElementToBeVisible(By.xpath(CATALOG_CLASSIFIER_ACTIVE_XPATH_PATTERN))
+            return waitForElementToBeVisible(By.xpath(String
+                    .format(CATALOG_CLASSIFIER_ACTIVE_XPATH_PATTERN, classifier)))
                     .isDisplayed();
         } catch (TimeoutException e) {
             return false;
