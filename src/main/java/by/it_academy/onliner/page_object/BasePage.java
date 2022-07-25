@@ -2,9 +2,10 @@ package by.it_academy.onliner.page_object;
 
 import by.it_academy.onliner.WebDriverDiscovery;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -26,15 +27,30 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
-    public void navigate (String url) {
+    public void navigate(String url) {
         driver.get(url);
     }
 
-    public void closeBrowser(){
+    public void closeBrowser() {
         driver.quit();
     }
 
     public List<WebElement> getListOfElements(By by) {
         return driver.findElements(by);
+    }
+
+    public void hoverElement(By by) {
+        WebElement element = waitForElementToBeVisible(by);
+        Actions action = new Actions(driver);
+        action.moveToElement(element).perform();
+    }
+
+    public boolean isElementDisplayed(By by) {
+        try {
+            return waitForElementToBeVisible(by)
+                    .isDisplayed();
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 }

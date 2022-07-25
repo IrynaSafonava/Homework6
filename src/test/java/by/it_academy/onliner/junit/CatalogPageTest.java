@@ -1,4 +1,4 @@
-package by.it_academy.onliner;
+package by.it_academy.onliner.junit;
 
 import by.it_academy.onliner.navigation.OnlinerNavigation;
 import by.it_academy.onliner.page_object.CatalogPage;
@@ -17,7 +17,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CatalogPageTest {
-
     private static CatalogPage catalogPage = new CatalogPage();
 
     @BeforeAll
