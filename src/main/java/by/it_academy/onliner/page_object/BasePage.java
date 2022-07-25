@@ -1,6 +1,6 @@
 package by.it_academy.onliner.page_object;
 
-import by.it_academy.onliner.WebDriverDiscovery;
+import by.it_academy.onliner.driver.WebDriverDiscovery;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;

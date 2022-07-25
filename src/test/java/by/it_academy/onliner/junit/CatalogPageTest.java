@@ -30,7 +30,7 @@ public class CatalogPageTest {
             "Дом и сад", "Авто и мото", "Красота и спорт", "Детям и мамам", "Работа и офис", "Еда"})
     public void catalogClassifierOptionsDisplayed(String option) {
         boolean isCatalogNavigationOptionDisplayed = catalogPage
-                .isElementDisplayed(option);
+                .isClassifierDisplayed(option);
 
         assertThat(isCatalogNavigationOptionDisplayed)
                 .as("Classifier " + option + " is in catalog navigation list")
@@ -63,16 +63,7 @@ public class CatalogPageTest {
     @CsvSource(value = {"Компьютеры и сети, Комплектующие"})
     public void allCategoryItemsHaveTitleAndFullDescription(String classifier, String category) {
 
-        boolean isClassifierActive = catalogPage
-                .isClassifierActive(classifier);
-
-        if (!isClassifierActive) {
-            catalogPage
-                    .clickCatalogClassifierLink(classifier)
-                    .clickCategoryLink(category);
-        } else {
-            catalogPage.clickCategoryLink(category);
-        }
+        catalogPage.clickCategoryLinkIfClassifierActive(classifier, category);
 
         int categoryItemsNumber = catalogPage
                 .getListOfCategoryItems(category)

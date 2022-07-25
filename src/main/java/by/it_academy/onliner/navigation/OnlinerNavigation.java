@@ -6,8 +6,8 @@ public class OnlinerNavigation {
 
     private static final String ONLINER_URL = "https://www.onliner.by";
 
-   public static void navigateOnlinerHomePage(){
-       new HomePage().navigate(ONLINER_URL);
-   }
+    public static void navigateOnlinerHomePage() {
+        new HomePage().navigate(ONLINER_URL);
+    }
 
 }

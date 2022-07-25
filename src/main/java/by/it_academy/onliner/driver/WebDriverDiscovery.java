@@ -1,4 +1,4 @@
-package by.it_academy.onliner;
+package by.it_academy.onliner.driver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,8 +9,8 @@ import java.time.Duration;
 public class WebDriverDiscovery {
     private static ThreadLocal<RemoteWebDriver> remoteWebDriver = new ThreadLocal<>();
 
-    public WebDriverDiscovery(){
-        if(remoteWebDriver.get() == null) {
+    public WebDriverDiscovery() {
+        if (remoteWebDriver.get() == null) {
             startBrowser();
         }
     }
@@ -25,7 +25,7 @@ public class WebDriverDiscovery {
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
     }
 
-    public WebDriver getWebDriver() {
+    public static WebDriver getWebDriver() {
         return remoteWebDriver.get();
     }
 }
