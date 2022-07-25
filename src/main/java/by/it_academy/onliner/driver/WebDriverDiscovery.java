@@ -25,7 +25,7 @@ public class WebDriverDiscovery {
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
     }
 
-    public static WebDriver getWebDriver() {
+    public WebDriver getWebDriver() {
         return remoteWebDriver.get();
     }
 }
