@@ -7,6 +7,7 @@ import java.util.List;
 
 public class CatalogPage extends BasePage {
 
+    private static final String ONLINER_CATALOG_URL = "https://catalog.onliner.by/";
     private static final String CATALOG_CLASSIFIER_XPATH_PATTERN =
             "//*[contains(@class, 'catalog-navigation-classifier') and contains(text(), '%s')]";
 
@@ -84,5 +85,10 @@ public class CatalogPage extends BasePage {
         } else {
             clickCategoryLink(category);
         }
+    }
+
+    @Override
+    public String getUrl() {
+        return ONLINER_CATALOG_URL;
     }
 }

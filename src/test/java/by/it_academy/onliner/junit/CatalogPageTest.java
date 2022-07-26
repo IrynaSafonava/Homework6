@@ -1,8 +1,7 @@
 package by.it_academy.onliner.junit;
 
-import by.it_academy.onliner.navigation.OnlinerNavigation;
+import by.it_academy.onliner.driver.WebDriverDiscovery;
 import by.it_academy.onliner.page_object.CatalogPage;
-import by.it_academy.onliner.page_object.HomePage;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,12 +16,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CatalogPageTest {
-    private static CatalogPage catalogPage = new CatalogPage();
+    static {
+        WebDriverDiscovery.setWebDriver();
+    }
+    private static final CatalogPage catalogPage = new CatalogPage();
 
     @BeforeAll
     public static void navigateToCatalogFromOnlinerHomePage() {
-        OnlinerNavigation.navigateOnlinerHomePage();
-        new HomePage().clickHeaderNavigationLink("Каталог");
+        catalogPage.navigate();
     }
 
     @ParameterizedTest(name = "#{index} - Run test with option = {0}")
@@ -93,6 +94,6 @@ public class CatalogPageTest {
 
     @AfterAll
     public static void close() {
-        catalogPage.closeBrowser();
+        WebDriverDiscovery.quitDriver();
     }
 }

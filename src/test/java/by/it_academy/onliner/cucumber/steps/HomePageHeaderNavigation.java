@@ -1,6 +1,5 @@
 package by.it_academy.onliner.cucumber.steps;
 
-import by.it_academy.onliner.navigation.OnlinerNavigation;
 import by.it_academy.onliner.page_object.HomePage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,7 +18,7 @@ public class HomePageHeaderNavigation {
 
     @Given("user navigates home page")
     public void userNavigatesOnlinerHomePage() {
-        OnlinerNavigation.navigateOnlinerHomePage();
+        homePage.navigate();
     }
 
     @When("user hovers {string} category in header")

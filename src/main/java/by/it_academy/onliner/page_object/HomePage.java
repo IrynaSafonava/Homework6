@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class HomePage extends BasePage {
+    private static final String ONLINER_URL = "https://www.onliner.by";
     private static final String HEADER_NAVIGATION_LINK_PATTERN =
             "//*[@class='b-main-navigation__text' and text()='%s']";
 
@@ -19,6 +20,10 @@ public class HomePage extends BasePage {
     private static final String HEADER_NAVIGATION_SUBMENU_OPTIONS =
             "//div[contains(@class, 'dropdown_visible')]" +
                     "//span[@class='b-main-navigation__dropdown-advert-sign']";
+
+    public HomePage() {
+        super();
+    }
 
     public void clickHeaderNavigationLink(String option) {
         waitForElementToBeVisible(By.xpath(String.format(HEADER_NAVIGATION_LINK_PATTERN, option))).click();
@@ -34,5 +39,10 @@ public class HomePage extends BasePage {
 
     public List<WebElement> getListOfSubmenuOptions() {
         return getListOfElements(By.xpath(HEADER_NAVIGATION_SUBMENU_OPTIONS));
+    }
+
+    @Override
+    public String getUrl() {
+        return ONLINER_URL;
     }
 }
